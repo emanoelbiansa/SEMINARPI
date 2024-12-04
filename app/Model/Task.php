@@ -1,6 +1,9 @@
 <?php 
 
 function insert_task($conn, $data){
+	if (empty($data[3])) {  // Assuming $data[3] is 'due_date'
+            $data[3] = null;
+    	}
 	$sql = "INSERT INTO tasks (title, description, assigned_to, due_date) VALUES(?,?,?,?)";
 	$stmt = $conn->prepare($sql);
 	$stmt->execute($data);
@@ -57,7 +60,7 @@ function count_tasks_overdue($conn){
 
 
 function get_all_tasks_NoDeadline($conn){
-	$sql = "SELECT * FROM tasks WHERE status != 'completed' AND due_date IS NULL OR due_date = '0000-00-00' ORDER BY id DESC";
+	$sql = "SELECT * FROM tasks WHERE status != 'completed' AND due_date IS NULL OR due_date = '1970-01-01' ORDER BY id DESC";
 	$stmt = $conn->prepare($sql);
 	$stmt->execute([]);
 
@@ -68,7 +71,8 @@ function get_all_tasks_NoDeadline($conn){
 	return $tasks;
 }
 function count_tasks_NoDeadline($conn){
-	$sql = "SELECT id FROM tasks WHERE status != 'completed' AND due_date IS NULL OR due_date = '0000-00-00'";
+	// $sql = "SELECT id FROM tasks WHERE status != 'completed' AND due_date IS NULL OR due_date = '0000-00-00'";
+	$sql = "SELECT id FROM tasks WHERE status != 'completed' AND (due_date IS NULL OR due_date = '1970-01-01')";
 	$stmt = $conn->prepare($sql);
 	$stmt->execute([]);
 
@@ -164,7 +168,7 @@ function count_my_tasks($conn, $id){
 }
 
 function count_my_tasks_overdue($conn, $id){
-	$sql = "SELECT id FROM tasks WHERE due_date < CURDATE() AND status != 'completed' AND assigned_to=? AND due_date != '0000-00-00'";
+	$sql = "SELECT id FROM tasks WHERE due_date < CURDATE() AND status != 'completed' AND assigned_to=? AND due_date != '1970-01-01'";
 	$stmt = $conn->prepare($sql);
 	$stmt->execute([$id]);
 
@@ -172,7 +176,7 @@ function count_my_tasks_overdue($conn, $id){
 }
 
 function count_my_tasks_NoDeadline($conn, $id){
-	$sql = "SELECT id FROM tasks WHERE assigned_to=? AND status != 'completed' AND due_date IS NULL OR due_date = '0000-00-00'";
+	$sql = "SELECT id FROM tasks WHERE assigned_to=? AND status != 'completed' AND due_date IS NULL OR due_date = '1970-01-01'";
 	$stmt = $conn->prepare($sql);
 	$stmt->execute([$id]);
 

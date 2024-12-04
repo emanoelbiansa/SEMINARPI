@@ -2,34 +2,33 @@
 session_start();
 if (isset($_SESSION['role']) && isset($_SESSION['id']) ) {
 
-	 include "DB_connection.php";
+    include "DB_connection.php";
     include "app/Model/Task.php";
     include "app/Model/User.php";
 
 	if ($_SESSION['role'] == "admin") {
-		 $todaydue_task = count_tasks_due_today($conn);
-	     $overdue_task = count_tasks_overdue($conn);
-	     $nodeadline_task = count_tasks_NoDeadline($conn);
-	     $num_task = count_tasks($conn);
-	     $num_users = count_users($conn);
-	     $pending = count_pending_tasks($conn);
-	     $in_progress = count_in_progress_tasks($conn);
-	     $completed = count_completed_tasks($conn);
+	     	$todaydue_task = count_tasks_due_today($conn);
+	     	$overdue_task = count_tasks_overdue($conn);
+	     	$nodeadline_task = count_tasks_NoDeadline($conn);
+	     	$num_task = count_tasks($conn);
+	     	$num_users = count_users($conn);
+	     	$pending = count_pending_tasks($conn);
+	     	$in_progress = count_in_progress_tasks($conn);
+	     	$completed = count_completed_tasks($conn);
 	}else {
-        $num_my_task = count_my_tasks($conn, $_SESSION['id']);
-        $overdue_task = count_my_tasks_overdue($conn, $_SESSION['id']);
-        $nodeadline_task = count_my_tasks_NoDeadline($conn, $_SESSION['id']);
-        $pending = count_my_pending_tasks($conn, $_SESSION['id']);
-	     $in_progress = count_my_in_progress_tasks($conn, $_SESSION['id']);
-	     $completed = count_my_completed_tasks($conn, $_SESSION['id']);
+        	$num_my_task = count_my_tasks($conn, $_SESSION['id']);
+        	$overdue_task = count_my_tasks_overdue($conn, $_SESSION['id']);
+        	$nodeadline_task = count_my_tasks_NoDeadline($conn, $_SESSION['id']);
+        	$pending = count_my_pending_tasks($conn, $_SESSION['id']);
+	     	$in_progress = count_my_in_progress_tasks($conn, $_SESSION['id']);
+	     	$completed = count_my_completed_tasks($conn, $_SESSION['id']);
 
 	}
-  } else {
-     header("Location: login.php");
-     exit();
+} else { 
+	header("Location: login.php");
+	exit();
 }
  ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -119,3 +118,4 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) ) {
 </script>
 </body>
 </html>
+<

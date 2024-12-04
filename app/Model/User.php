@@ -1,9 +1,9 @@
 <?php 
 
 function get_all_users($conn){
-	$sql = "SELECT * FROM users WHERE role =? ";
+	$sql = "SELECT * FROM users";
 	$stmt = $conn->prepare($sql);
-	$stmt->execute(["employee"]);
+	$stmt->execute();
 
 	if($stmt->rowCount() > 0){
 		$users = $stmt->fetchAll();

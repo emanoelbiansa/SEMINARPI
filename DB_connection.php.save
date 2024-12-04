@@ -1,9 +1,9 @@
-<?php  
+	<?php  
 
 $sName = "localhost";
-$uName = "WNA";
-$pass  = "admin";
-$db_name = "import_db";
+$uName = "root";
+$pass  = "secret@gtUGM_15";
+$db_name = "task_management_db";
 
 try {
 	$conn = new PDO("mysql:host=$sName;dbname=$db_name", $uName, $pass);
